@@ -70,3 +70,11 @@ ul li:hover {
     background-color: #CDF3F1;
     cursor: pointer;
 }
+
+h1#title {
+    text-align: center;
+    color: #02A695;
+    margin-bottom: 0;
+    margin-top: 10px;
+    font-size: 2.2em;
+}

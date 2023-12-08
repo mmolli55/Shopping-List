@@ -1,43 +1,28 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
-
-const appSettings = {
-    databaseURL: "https://realtime-database-ef936-default-rtdb.firebaseio.com/"
-}
-
-const app = initializeApp(appSettings)
-const database = getDatabase(app)
-const shoppingListInDB = ref(database, "shoppingList")
-
 const inputFieldEl = document.getElementById("input-field")
 const addButtonEl = document.getElementById("add-button")
 const shoppingListEl = document.getElementById("shopping-list")
+const groceryList = []
+
 
 addButtonEl.addEventListener("click", function() {
     if (inputFieldEl.value) {
         let inputValue = inputFieldEl.value
-        push(shoppingListInDB, inputValue)
+        groceryList.push(inputValue)
         clearInputFieldEl()
+        updateShoppingListEl()
     } 
 })
 
-onValue(shoppingListInDB, function(snapshot) {
-    if (snapshot.exists()) {
-        let itemsArray = Object.entries(snapshot.val())
-        clearShoppingListEl()
-        for (let i = 0; i < itemsArray.length; i++) {
-            let currentItem = itemsArray[i]
-            let currentItemID = currentItem[0]
-            let currentItemValue = currentItem[1]
-        
-            appendItemToShoppingListEl(currentItem)
-        }
+function updateShoppingListEl() {
+    clearShoppingListEl()
+    if (groceryList.length > 0) {
+        groceryList.map(item => appendItemToShoppingListEl(item))
     } else {
-        shoppingListEl.innerHTML = "List currently empty..."
-        shoppingListEl.style.display = "flex"
-        shoppingListEl.style.justifyContent = "center"
+          shoppingListEl.innerHTML = "List is currently empty..."
+          shoppingListEl.style.display = "flex"
+          shoppingListEl.style.justifyContent = "center"
     }
-})
+}
 
 function clearShoppingListEl() {
     shoppingListEl.innerHTML = ""
@@ -48,15 +33,13 @@ function clearInputFieldEl() {
 }
 
 function appendItemToShoppingListEl(item) {
-    let itemID = item[0]
-    let itemValue = item[1]
-
     let newEl = document.createElement("li")
-    newEl.textContent = itemValue
+    newEl.textContent = item
 
     newEl.addEventListener("dblclick", function() {
-        let exactLocationOfItemInDB = ref(database, `shoppingList/${itemID}`)
-        remove(exactLocationOfItemInDB)
+        const itemIndex = groceryList.indexOf(item)
+        groceryList.splice(itemIndex, 1)
+        updateShoppingListEl()
     })
     shoppingListEl.append(newEl)
 }
