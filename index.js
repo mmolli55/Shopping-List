@@ -1,13 +1,18 @@
 const inputFieldEl = document.getElementById("input-field")
 const addButtonEl = document.getElementById("add-button")
 const shoppingListEl = document.getElementById("shopping-list")
-const groceryList = []
 
+let groceryList = []
+if(localStorage.getItem("groceryList")) {
+    groceryList = JSON.parse(localStorage.getItem("groceryList"))
+    updateShoppingListEl()
+} 
 
 addButtonEl.addEventListener("click", function() {
     if (inputFieldEl.value) {
         let inputValue = inputFieldEl.value
         groceryList.push(inputValue)
+        updateLocalStorage()
         clearInputFieldEl()
         updateShoppingListEl()
     } 
@@ -22,6 +27,10 @@ function updateShoppingListEl() {
           shoppingListEl.style.display = "flex"
           shoppingListEl.style.justifyContent = "center"
     }
+}
+
+function updateLocalStorage() {
+  localStorage.setItem("groceryList", JSON.stringify(groceryList))
 }
 
 function clearShoppingListEl() {
@@ -40,6 +49,7 @@ function appendItemToShoppingListEl(item) {
         const itemIndex = groceryList.indexOf(item)
         groceryList.splice(itemIndex, 1)
         updateShoppingListEl()
+        updateLocalStorage()
     })
     shoppingListEl.append(newEl)
 }
