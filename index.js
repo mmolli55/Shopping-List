@@ -8,6 +8,16 @@ if(localStorage.getItem("groceryList")) {
     updateShoppingListEl()
 } 
 
+inputFieldEl.addEventListener("keypress", function(e) {
+    if (inputFieldEl.value && e.key === 'Enter') {
+        let inputValue = inputFieldEl.value
+        groceryList.push(inputValue)
+        updateLocalStorage()
+        clearInputFieldEl()
+        updateShoppingListEl()
+    }
+})
+
 addButtonEl.addEventListener("click", function() {
     if (inputFieldEl.value) {
         let inputValue = inputFieldEl.value
