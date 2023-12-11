@@ -1,6 +1,7 @@
 const inputFieldEl = document.getElementById("input-field")
 const addButtonEl = document.getElementById("add-button")
 const shoppingListEl = document.getElementById("shopping-list")
+const deleteInstructions = document.getElementById("delete-instructions")
 
 let groceryList = []
 if(localStorage.getItem("groceryList")) {
@@ -32,10 +33,12 @@ function updateShoppingListEl() {
     clearShoppingListEl()
     if (groceryList.length > 0) {
         groceryList.map(item => appendItemToShoppingListEl(item))
+        deleteInstructions.style.display = "block"
     } else {
           shoppingListEl.innerHTML = "List is currently empty..."
           shoppingListEl.style.display = "flex"
           shoppingListEl.style.justifyContent = "center"
+          deleteInstructions.style.display = "none"
     }
 }
 
