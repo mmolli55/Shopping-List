@@ -1,0 +1,24 @@
+{
+  "name": "grocery-list",
+  "version": "1.0.0",
+  "description": "and app to make a list of grocery items needed",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmolli55/Shopping-List.git"
+  },
+  "keywords": [
+    "grocery",
+    "list",
+    "shopping"
+  ],
+  "author": "matthew molli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmolli55/Shopping-List/issues"
+  },
+  "homepage": "https://github.com/mmolli55/Shopping-List#readme"
+}
